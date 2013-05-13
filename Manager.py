@@ -1,14 +1,11 @@
-import pygame as pg
-from pygame.locals import *
-import os, sys
-
 class Resources:
     def __init__(self):
+
         self.images = {}
         self.sounds = {}
+
         self.load_resources("img", self.load_img, self.images)
         self.load_resources("snd", self.load_sound, self.sounds)
-
 
     def load_img(self, name):
         try:
@@ -42,4 +39,15 @@ class Resources:
             name = resinfo[1]            
             dic.setdefault(lvl, []).append(name)
 
-r = Resources()
+    def get_resources(self, rtype, lvlname):
+        if rtype == "image":
+            return self.images[lvlname]
+        else:
+            return self.sounds[lvlname]
+
+class Manager:
+    def __init__(self):
+        self.res = Resources()
+        
+    def initPyGame(self):
+        pg.init()

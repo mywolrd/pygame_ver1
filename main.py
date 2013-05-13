@@ -25,7 +25,8 @@ def main():
 
     while True:
         input(pygame.event.get())
-        
+
+#make an input handler class        
 def input(events):
     for event in events:
         if event.type == QUIT:
@@ -33,19 +34,6 @@ def input(events):
             sys.exit(0)
         else:
             pass
-
-def load_sound(name):
-    class NoneSound:
-        def play(self): pass
-    if not pygame.mixer:
-        return NoneSound()
-    try:
-        sound = pygame.mixer.Sound(name)
-    except pygame.error, message:
-        print "Cannot load sound:", wav
-        raise SystemExit, message
-    return sound
-
 
 if __name__ == "__main__":
     main()

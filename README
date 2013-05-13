@@ -15,3 +15,21 @@ They must inherit from "class stage" and implement run(), next_level().
 
 main.py is the main loop.
 Manager.py is a game manager. It holds Resources class which initializes, and holds game resources, game info.
+
+I am trying to make it weird(Why? I felt like it).
+
+which one to go
+1) weird mini games.
+It starts out with the main character dreaming. In some games, there are going to be hints that tell you whether you are in dream or not.
+When not in dream, certain mini games will get you killed and game ends.
+When in dream, certain games will never end, therefore game over.
+
+When not in dream, if you dont finish a game in a given time limit, game_over or different ending. 
+When in dream, if you dont finish a game in a given time limit, you wake up and do the next level (you dont know that you are awake).
+
+So basically the game depends on you're asleep or awake.
+Player sometimes gets a hint to figure out, but not always. 
+
+2)
+Or simple and easy games.
+Glen wants to make it on mobile.
