@@ -63,15 +63,34 @@ class Resources:
     def get_sounds(self, lvlname):
         return self.sounds[lvlname]
 
+# InputHandler registers a level object, and callbacks from it.
+# (or it notifies what has been entered to the registered level object)
+# Since only one level is drawn on the screen at a time,
+# no need to pre-populate it with other level objects. 
 class InputHandler:
     def __init__(self, screen):
         self.callbacks = {}
         self.screen = screen
+        
+    def register_level(self, lvl):
+        self.level = lvl
 
-    def add_callback(self, func, event):
-        self.callbacks[event] = func
+    def run(self):
+        for event in pg.event.get():
+            if event.type == QUIT:
+                pass
+            elif event.type == KEYDOWN and event.key == K_ESCAPE:
+                pass
+    
+class LevelManager:
+    pass
 
-class Manager:
+# do I want to make my small game coding complicated
+class EventManager:
+    pass
+
+
+class GameManager:
     def __init__(self):
         self.init_pyGame()
         self.init_handler()
