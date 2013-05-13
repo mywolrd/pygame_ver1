@@ -7,6 +7,7 @@ class level0(stage):
         super(level0, self).__init__(resource)
 
         self.mgr = resource
+        self.handler = self.mgr.get_handler()
         self.images = self.mgr.get_images("level0")
         self.sounds = self.mgr.get_sounds("level0")
 
@@ -16,7 +17,7 @@ class level0(stage):
         self.screendim = self.mgr.get_fullscreendim()
         self.mandim = self.man.get_size()
 
-    def run(self, func):
+    def run(self):
         screen = pg.display.set_mode((1000, 500), RESIZABLE)
 
         delay = 1000
@@ -39,7 +40,8 @@ class level0(stage):
             delay /= i
             
         while True:
-            func(pg.event.get())
+            events = pg.event.get()
+            for event in events:
 
         self.mgr.set_display_mode_original()
 

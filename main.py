@@ -9,7 +9,7 @@ def main():
     
     myMgr = Manager()
     lvl0 = lvl.level0(myMgr)
-    lvl0.run(input)
+    lvl0.run()
 
 #make an input handler class        
 def input(events):

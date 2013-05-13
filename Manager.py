@@ -11,6 +11,8 @@ class Resources:
         self.load_resources("img", self.load_img, self.images)
         self.load_resources("snd", self.load_sound, self.sounds)
 
+    # creates pygame.image with a given name
+    # name : name of an image file
     def load_img(self, name):
         try:
             image = pg.image.load(name)
@@ -19,6 +21,8 @@ class Resources:
             raise SystemExit, message
         return image
 
+    # creates pygame.mixer.Sound with a given name
+    # name : name of a sound file
     def load_sound(self, name):
         class NoneSound:
             def play(self): pass
@@ -31,6 +35,12 @@ class Resources:
             raise SystemExit, message
         return sound
 
+    # load all resources in a directory
+    # rtype : resource type which is also a directory name for the resource type
+    # func : function to be use to load 'rtype' resources
+    #        image files use load_img
+    #        sound files use load_sound
+    # dic  : dictionary to hold a list of resources for each level
     def load_resources(self,rtype,func,dic):
 
         names = os.listdir(rtype)
@@ -43,25 +53,45 @@ class Resources:
             name = resinfo[1]            
             dic.setdefault(lvl, []).append((name, res))
        
+    # returns a list of images for level 'lvlname'
+    # lvlname : lvlname in string format 'level0', 'level1', 'level2'
     def get_images(self, lvlname):
         return self.images[lvlname]
 
+    # return a list of sounds for level 'lvlname'
+    # lvlname : level name in string format
     def get_sounds(self, lvlname):
         return self.sounds[lvlname]
+
+class InputHandler:
+    def __init__(self, screen):
+        self.callbacks = {}
+        self.screen = screen
+
+    def add_callback(self, func, event):
+        self.callbacks[event] = func
 
 class Manager:
     def __init__(self):
         self.init_pyGame()
-
+        self.init_handler()
 
         self.res = Resources()        
         self.clock = pg.time.Clock()
     
+    # initializes pygame and creates a screen
     def init_pyGame(self):
         pg.init()
         self.screen = pg.display.set_mode((800, 600), RESIZABLE)
         self.fullscreen_dim = pg.display.list_modes()[0]
 
+    # initializes input handler
+    # for now, QUIT only 
+    def init_handler(self):
+        self.handler = InputHander()
+        self.handler.add_callback()
+
+    # returns full screen dimention tuple (width, height)
     def get_fullscreendim(self):
         return self.fullscreen_dim
 
@@ -85,8 +115,39 @@ class Manager:
             dic[name] = obj
         return dic
 
+    # returns pygame.time.Clock object
     def get_clock(self):
         return self.clock
 
+    # sets display screen size to width = 800, height = 600
     def set_display_mode_original(self):
         self.screen = pg.display.set_mode((800, 600))
+
+    # returns input handler
+    def get_handler(self):
+        return self.handler
+
+    """
+    need to figure out better way to handle input
+    # pop up window for yes or no selection
+    def yesno_popup(self, yesfunc, yesparam=None, nofunc, noparam=None):
+
+        temp = gui.Container(width=WIDTH, height=HEIGHT)
+        app = gui.App()
+
+        app.init(temp)
+        
+        yes = gui.Button("YES")
+        yes.connect(gui.CLICK, yesfunc, yesparam)
+        
+        no = gui.Button("NO")
+        no.connect(gui.CLICK, nofunc, noparam)
+
+        app.add(yes, 0, 0)
+        app.add(no, 50, 0)
+
+        app.paint(screen)
+
+    def finish(self):
+        py.quit()
+        sys.exit(0) """
