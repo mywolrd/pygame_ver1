@@ -1,4 +1,4 @@
-class stage:
+class stage(object):
     def __init__(self, resource):
         self.resource = resource
 
