@@ -1,0 +1,17 @@
+pygame game
+
+sound files go to snd/ directory.
+image files go to img/ directory.
+Their names must be in this specific format(maybe add exception later to catch this).
+
+"level number"_"file name".extension
+level0_hello.mp3
+level0_img1.png
+
+find img and sound sources(credit)
+
+stage directory holds stages(mini games).
+They must inherit from "class stage" and implement run(), next_level().
+
+main.py is the main loop.
+Manager.py is a game manager. It holds Resources class which initializes, and holds game resources, game info.
