@@ -13,7 +13,7 @@ find img and sound sources(credit)
 stage directory holds stages(mini games).
 Their names are in the format 'levelx', x being an integer.
 This is no indication of difficulty of a level.
-They must inherit from "class stage" and implement run(), next_level().
+They must inherit from "class stage" and implement run(), next_level(), notify()
 
 main.py is the main loop.
 Manager.py is a game manager. It holds Resources class which initializes, and holds game resources, game info.

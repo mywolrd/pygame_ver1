@@ -3,20 +3,20 @@ import pygame as pg
 from pygame.locals import *
 
 class level0(stage):
-    def __init__(self, resource):
+    def __init__(self, mgr):
         super(level0, self).__init__(resource)
 
-        self.mgr = resource
-        self.handler = self.mgr.get_handler()
+        self.mgr = mgr
+
         self.images = self.mgr.get_images("level0")
         self.sounds = self.mgr.get_sounds("level0")
-
+        
         self.hello = self.sounds["hello.mp3"]
         self.man = self.images["img2.png"]
-
+        
         self.screendim = self.mgr.get_fullscreendim()
         self.mandim = self.man.get_size()
-
+        
     def run(self):
         screen = pg.display.set_mode((1000, 500), RESIZABLE)
 
@@ -39,10 +39,6 @@ class level0(stage):
             i += 1
             delay /= i
             
-        while True:
-            events = pg.event.get()
-            for event in events:
-
         self.mgr.set_display_mode_original()
 
     def calculate_size(self, i):
