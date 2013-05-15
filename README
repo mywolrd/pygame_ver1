@@ -16,22 +16,36 @@ This is no indication of difficulty of a level.
 They must inherit from "class stage" and implement run(), next_level(), notify()
 
 main.py is the main loop.
-Manager.py is a game manager. It holds Resources class which initializes, and holds game resources, game info.
+Manager.py is game manager: related to game loop, pause, quit
+	      level mananger: a collection of level objects
+	      resource manager: a collection of resources, images, sounds
+	      event manager: send events to managers
 
-I am trying to make it weird(Why? I felt like it).
 
-which one to go
-1) weird mini games.
-It starts out with the main character dreaming. In some games, there are going to be hints that tell you whether you are in dream or not.
-When not in dream, certain mini games will get you killed and game ends.
-When in dream, certain games will never end, therefore game over.
+Since you mentioned a stealthy game......
+Make this a zombie game? Reason being because I like zombies.
 
-When not in dream, if you dont finish a game in a given time limit, game_over or different ending. 
-When in dream, if you dont finish a game in a given time limit, you wake up and do the next level (you dont know that you are awake).
+Title : You need to learn to love zombies.
 
-So basically the game depends on you're asleep or awake.
-Player sometimes gets a hint to figure out, but not always. 
+You play a zombie, and run from people.
 
-2)
-Or simple and easy games.
-Glen wants to make it on mobile.
+People : 1) an ordinary liveling, they will call for help and bring more people
+         2) a liveling with a bat, he/she will come for you and smash you
+	 with a bat. One must get close to you though and they are only
+	 slightly faster than you are. two-object near collision or collision.
+	 3) a liveling with a gun, when he/she sees you, you are "dead".
+	 when you get in his/her vision. we can make a gunner weaker or
+	 stronger by limiting vision. may add hp points so you can take
+	 more hits.
+
+You : are a zombie. You try to walk away from livelings. You can run,
+      but when you run, you leave a trail of your precious blood and meat
+      behind which will trigger increase of caution level of livelings in
+      area(decide how big).
+      you can play dead(simply graphic of you lying down or make it fancier?).
+      when you play dead, livelings will just walk by.
+      when their caution level is high(playing dead after running for a period
+      of time), gunner will shoot you.(decide the caution level threshold).
+
+we make it tile game and design levels.
+how about this?
