@@ -3,23 +3,27 @@ import pygame as pg
 from pygame.locals import *
 
 class level0(stage):
-    def __init__(self, mgr):
-        super(level0, self).__init__(resource)
+    def __init__(self, resmgr):
+        super(level0, self).__init__(resmgr)
 
-        self.mgr = mgr
-
-        self.images = self.mgr.get_images("level0")
-        self.sounds = self.mgr.get_sounds("level0")
+        self.images = self.resmgr.get_images("level0")
+        self.sounds = self.resmgr.get_sounds("level0")
         
         self.hello = self.sounds["hello.mp3"]
         self.man = self.images["img2.png"]
         
-        self.screendim = self.mgr.get_fullscreendim()
+        self.screendim = (1000, 700)
+        #self.screendim = self.resmgr.get_fullscreendim()
         self.mandim = self.man.get_size()
         
     def run(self):
-        screen = pg.display.set_mode((1000, 500), RESIZABLE)
+        surface = pg.display.get_surface()
+        osize = surface.get_size()
 
+        screen = pg.display.set_mode(self.screendim, RESIZABLE)
+ 
+        centerx, centery = screen.get_rect().center
+        
         delay = 1000
         i = 0
 
@@ -27,9 +31,12 @@ class level0(stage):
             
             screen.fill((0,0,0))
 
-            size = self.calculate_size(i)
-            self.man = pg.transform.scale(self.man, size)
-            
+            sizex, sizey = self.calculate_size(i)
+            self.man = pg.transform.scale(self.man, (sizex, sizey))
+
+            screen.blit(self.man, (centerx - int(sizex/2), 
+                                   centery - int(sizey/2)))
+            pg.display.flip()
             self.hello.play()
             pg.time.delay(500)
             
@@ -38,8 +45,14 @@ class level0(stage):
             pg.time.delay(delay)            
             i += 1
             delay /= i
-            
-        self.mgr.set_display_mode_original()
+        
+        pg.display.set_mode((800, 600), RESIZABLE)
+        #self.resmgr.set_display_mode_original()
+
+    # everything happens in there.
+    # master game loop will call this.
+    def notify(self, ev):
+        self.run()
 
     def calculate_size(self, i):
 

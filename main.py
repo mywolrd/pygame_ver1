@@ -1,9 +1,4 @@
-import sys, os, time
-from Managers import GameManager, LevelManager, EventManager, ResourceManager
-import stages.levels as lvl
-
-import pygame as pg
-from pygame.locals import *
+from Managers import GameManager, LevelManager, EventManager, InputManager
 
 def main():
 

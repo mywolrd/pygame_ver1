@@ -1,6 +1,7 @@
 import os
-import pygame as pg
 from pygame.locals import *
+import pygame as pg
+import stages.levels as levels
 
 class ResourceManager:
     def __init__(self):
@@ -10,6 +11,8 @@ class ResourceManager:
 
         self.load_resources("img", self.load_img, self.images)
         self.load_resources("snd", self.load_sound, self.sounds)
+
+        self.fullscreen_dim = pg.display.list_modes()[0]
 
     # creates pygame.image with a given name
     # name : name of an image file
@@ -73,14 +76,18 @@ class ResourceManager:
             dic[name] = obj
         return dic
 
+    # returns full screen dimention tuple (width, height)
+    def get_fullscreendim(self):
+        return self.fullscreen_dim
+
 # when there is an input, it calls EventManager.post to send the input.
 class InputManager:
     def __init__(self, evmgr):
 
         self.eventmgr = evmgr
-        self.eventmgr.register(self)
+        self.eventmgr.register_listener(self)
         
-    def notify(self):
+    def notify(self, ev):
         for event in pg.event.get():
             if event.type == QUIT:
                 pass
@@ -92,27 +99,28 @@ class InputManager:
 # which sends an event 'next level'. It triggers LevelManager.init_level     
 class LevelManager:
     def __init__(self, evmgr):
+        self.resmgr = ResourceManager()
 
         self.eventmgr = evmgr
-        self.eventmgr.register(self)
+        self.eventmgr.register_listener(self)
 
         self.lvlname = 'level0'
         self.init_level(self.lvlname)
 
     def set_level(self, lvl):
-        self.currentlvl = lvl
+        self.lvl = lvl
 
     def get_level(self):
-        return self.currentlvl
+        return self.lvl
 
     # creates a level object with the given name
     def init_level(self, lvlname):
-        cons = getattr(level0, lvlname)
-        self.lvl = cons()
+        cons = getattr(levels, lvlname)
+        self.lvl = cons(self.resmgr)
 
     def notify(self, ev):
         # only acts on level related events
-        self.currentlvl.notify(ev)
+        self.lvl.notify(ev)
 
 # in charge of mediating events to objects
 # from github.com/sjbrown/writing_games_tutorial/code_example/example.py
@@ -132,7 +140,7 @@ class EventManager:
 
     # send an event to all registered objects
     def post(self, event):
-        for listerner in self.listeners:
+        for listener in self.listeners:
             listener.notify(event)
 
 class GameManager:
@@ -140,27 +148,22 @@ class GameManager:
         self.init_pyGame()
 
         self.eventmgr = evmgr
-        self.eventmgr.register(self)
+        self.eventmgr.register_listener(self)
 
         self.clock = pg.time.Clock()
     
     # initializes pygame and creates a screen
     def init_pyGame(self):
         pg.init()
-        self.screen = pg.display.set_mode((800, 600), RESIZABLE)
-        self.fullscreen_dim = pg.display.list_modes()[0]
-
-    # returns full screen dimention tuple (width, height)
-    def get_fullscreendim(self):
-        return self.fullscreen_dim
+        screen = pg.display.set_mode((800, 600), RESIZABLE)
 
     # returns pygame.time.Clock object
     def get_clock(self):
         return self.clock
 
     # sets display screen size to width = 800, height = 600
-    def set_display_mode_original(self):
-        self.screen = pg.display.set_mode((800, 600))
+    #def set_display_mode_original(self):
+    #    self.screen = pg.display.set_mode((800, 600))
 
     """
     need to figure out how to quit
