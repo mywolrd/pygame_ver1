@@ -32,6 +32,8 @@ class ResourceManager:
         if not pg.mixer:
             return NoneSound()
         try:
+            # Sound does not work. change to a class of a file name with 
+            # mixer.music.load, play, stop maybe
             sound = pg.mixer.Sound(name)
         except pg.error, message:
             print "FAILED LOADING SOUND ", name
