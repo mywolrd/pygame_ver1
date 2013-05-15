@@ -73,16 +73,14 @@ class ResourceManager:
             dic[name] = obj
         return dic
 
-
-# InputHandler registers a level object, and callbacks from it.
-# it notifies what has been entered to the registered lobjects
-# Since only one level is drawn on the screen at a time,
-# no need to pre-populate it with other level objects. 
+# when there is an input, it calls EventManager.post to send the input.
 class InputManager:
     def __init__(self, evmgr):
-        self.evmgr = evmgr
+
+        self.eventmgr = evmgr
+        self.eventmgr.register(self)
         
-    def run(self):
+    def notify(self):
         for event in pg.event.get():
             if event.type == QUIT:
                 pass
@@ -94,8 +92,12 @@ class InputManager:
 # which sends an event 'next level'. It triggers LevelManager.init_level     
 class LevelManager:
     def __init__(self, evmgr):
-        self.evmgr = evmgr
-        self.currentlvl = "level0"
+
+        self.eventmgr = evmgr
+        self.eventmgr.register(self)
+
+        self.lvlname = 'level0'
+        self.init_level(self.lvlname)
 
     def set_level(self, lvl):
         self.currentlvl = lvl
@@ -103,10 +105,13 @@ class LevelManager:
     def get_level(self):
         return self.currentlvl
 
+    # creates a level object with the given name
     def init_level(self, lvlname):
-        pass
+        cons = getattr(level0, lvlname)
+        self.lvl = cons()
 
     def notify(self, ev):
+        # only acts on level related events
         self.currentlvl.notify(ev)
 
 # in charge of mediating events to objects
@@ -133,7 +138,10 @@ class EventManager:
 class GameManager:
     def __init__(self, evmgr):
         self.init_pyGame()
+
         self.eventmgr = evmgr
+        self.eventmgr.register(self)
+
         self.clock = pg.time.Clock()
     
     # initializes pygame and creates a screen
@@ -184,4 +192,5 @@ class GameManager:
 
     # game loop
     def run(self):
-        pass
+        while True:
+            self.eventmgr.post(1)
