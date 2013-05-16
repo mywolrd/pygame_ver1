@@ -3,6 +3,9 @@ import pygame as pg
 
 # Tiles, stationary objects that do not have
 # multiple sprites representing itself.
+#
+# sprite is an image object from ResourceManager
+# topleft is the topleft coordinate of this object on the display
 class BaseSprite(pg.sprite.DirtySprite):
     def __init__(self, sprite, topleft):
         super(BaseSprite, self).__init__(self)
@@ -10,20 +13,6 @@ class BaseSprite(pg.sprite.DirtySprite):
         self.image = sprite
         self.rect = self.image.get_rect()
         self.rect.topleft = topleft
-
-    def update(self):
-        pass
-
-# For character objects, which may have motions.
-
-class BaseSpriteSheet(pg.sprite.DirtySprite):
-    def __init__(self, spritesheet, sheetinfo):
-        super(BaseSpriteSheet, self).__init__(self)
-        self.dirty = 2
-        self.sheet = spritesheet
-        self.sheetinfo = sheetinfo
-        self.currentmotion = None
-        self.currentindex = 0
 
     def update(self):
         pass
@@ -36,12 +25,20 @@ class Tile(BaseSprite):
     def isCollidable(self):
         self.collidable = True
 
-class Liveling(BaseSpriteSheet):
+# For character objects, which may have motions.
+# 
+# spritesheet is an image object/file containing bunch of sprites
+# sheetinfo is a dictionary - 
+class BaseSpriteSheet(pg.sprite.DirtySprite):
     def __init__(self, spritesheet, sheetinfo):
-        super(BaseSpriteSheet, self).__init__(self, spritesheet, sheetinfo)
+        super(BaseSpriteSheet, self).__init__(self)
+        self.dirty = 2
 
-    def is_in_vision(self, char):
-        pass
+        self.sheet = spritesheet
+        self.sheetinfo = sheetinfo
+
+        self.currentmotion = None
+        self.currentindex = 0
 
     def update(self):
         pass
