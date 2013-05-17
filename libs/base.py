@@ -8,7 +8,7 @@ import pygame as pg
 # topleft is the topleft coordinate of this object on the display
 class BaseSprite(pg.sprite.DirtySprite):
     def __init__(self, sprite, topleft):
-        super(BaseSprite, self).__init__(self)
+        super(BaseSprite, self).__init__()
         self.dirty = 1
         self.image = sprite
         self.rect = self.image.get_rect()
@@ -31,14 +31,13 @@ class Tile(BaseSprite):
 # sheetinfo is a dictionary - 
 class BaseSpriteSheet(pg.sprite.DirtySprite):
     def __init__(self, spritesheet, sheetinfo):
-        super(BaseSpriteSheet, self).__init__(self)
+        super(BaseSpriteSheet, self).__init__()
         self.dirty = 2
 
         self.sheet = spritesheet
         self.sheetinfo = sheetinfo
-
-        self.currentmotion = None
-        self.currentindex = 0
+        
+        self.animindex = 0
 
     def update(self):
         pass
