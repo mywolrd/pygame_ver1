@@ -14,21 +14,25 @@ class Me(BaseSpriteSheet):
         self.posx = None
         self.posy = None
 
-    def update(self, ev):
+    def update(self, ev, collidables):
+
+        update_pos = (0, 0)
 
         # if any of four moves(up, down, right, left) is entered
-        # update self.position. self.position is top-left coordinate
-        # of this sprite.
-
+        # update self.posx, self.posy. self.posx, self.posy is top-left
+        # coordinate of this image on the screen.
         if ev == UP:
-            self.posy += self.speed
+            update_pos = (0, self.speed)
         elif ev == DOWN:
-            self.posy -= self.speed
+            update_pos = (0, -self.speed)
         elif ev == LEFT:
-            self.posx -= self.speed
+            update_pos = (-self.speed, 0)
         elif ev == RIGHT:
-            self.posx += self.speed
+            update_pos = (self.speed, 0)
         elif ev == DEAD:
+            # update is called when a keyboard event occurs.
+            # so for DEAD to work player has to continue hold or hit DEAD key.
+            # This is not desirable. Fix this. Or it may work just fine.
             pass
         elif ev == RUN:
             # change speed when RUN event has occurred.
@@ -42,8 +46,14 @@ class Me(BaseSpriteSheet):
         
         self.image = (self.spritesheet[animation])[animindex]
         self.rect = image.get_rect()
-        self.rect.topleft = (self.posx, self.posy)
 
+        # check for collision. If there is, don't update.
+        if not pg.sprite.spritecollideany(self, collidables):
+            pass
+            
+        self.rect.topleft = (self.posx, self.posy)
+        
+                    
         # change self.image to the next motion in spritesheet
         if animindex == INDEXMAX:
             animindex = 0
