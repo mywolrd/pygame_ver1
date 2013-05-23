@@ -39,5 +39,5 @@ class BaseSpriteSheet(pg.sprite.DirtySprite):
         
         self.animindex = 0
 
-    def update(self):
+    def update(self, ev):
         pass

@@ -1,5 +1,6 @@
 from base import BaseSpriteSheet
 from pygame.locals import *
+import copy
 import pygame as pg
 
 WALK = 5
@@ -11,24 +12,22 @@ class Me(BaseSpriteSheet):
         super(Me, self).__init__(spritesheet, sheetinfo)
         self.speed  = WALK
         self.animation = LEFT
-        self.posx = None
-        self.posy = None
-
+        
     def update(self, ev, collidables):
 
-        update_pos = (0, 0)
+        dx, dy = 0, 0
 
         # if any of four moves(up, down, right, left) is entered
         # update self.posx, self.posy. self.posx, self.posy is top-left
         # coordinate of this image on the screen.
         if ev == UP:
-            update_pos = (0, self.speed)
+            dy = self.speed
         elif ev == DOWN:
-            update_pos = (0, -self.speed)
+            dy = -self.speed
         elif ev == LEFT:
-            update_pos = (-self.speed, 0)
+            dx = -self.speed
         elif ev == RIGHT:
-            update_pos = (self.speed, 0)
+            dx = self.speed
         elif ev == DEAD:
             # update is called when a keyboard event occurs.
             # so for DEAD to work player has to continue hold or hit DEAD key.
@@ -46,20 +45,22 @@ class Me(BaseSpriteSheet):
         
         self.image = (self.spritesheet[animation])[animindex]
         self.rect = image.get_rect()
-
-        # check for collision. If there is, don't update.
-        if not pg.sprite.spritecollideany(self, collidables):
-            pass
-            
-        self.rect.topleft = (self.posx, self.posy)
         
-                    
+        copy_me = copy.deepcopy(self)
+        copy_me.rect.mode_ip(dx, dy)
+                                         
+        # check for collision. If there is, don't update.
+        # Boundary checks neccessary ? Not sure if PyGame takes care of it....
+        # C source code does not seem to check boundaries.
+        if not pg.sprite.spritecollideany(copy_me, collidables):
+            self.rect.move_ip(dx, dy)
+            
         # change self.image to the next motion in spritesheet
         if animindex == INDEXMAX:
             animindex = 0
         else:
             animindex += 1
         
-
-
-    
+    def checkBounds(self, rect):
+        # check if the rect is in the bound of the display
+        pass

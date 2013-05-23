@@ -15,7 +15,7 @@ class ResourceManager:
 
         self.fullscreen_dim = pg.display.list_modes()[0]
 
-    # returns a dictionary that maps an animation name
+    # load a sprite sheet to a dictionary that maps an animation name
     # and images that make up animation.
     # sheetinfo is a dictionary that maps an animation name
     # to a list of PyGame rectangle coordinates
