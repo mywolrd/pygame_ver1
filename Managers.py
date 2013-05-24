@@ -67,34 +67,30 @@ class ResourceManager:
     def load_resources(self,rtype,func,dic):
 
         names = os.listdir(rtype)
-
+        
         for name in names:
             loc = os.path.join(rtype, name)
             res = func(loc)
-            resinfo  = name.split('_')
-            lvl = resinfo[0]
-            name = resinfo[1]            
-            dic.setdefault(lvl, []).append((name, res))
-       
-    # returns a dictionary of resources for the level "lvlname"
-    # key : image name
-    # value : pygame.image object
-    def get_images(self, lvlname):        
-        dic = {}
-        reslist = self.images[lvlname]
-        for name, obj in reslist:
-            dic[name] = obj
-        return dic
+            
+            # files will be either .ogg or .png
+            # so this is enough to get rid of a file extension
+            name = name[:-4]
+            dic[name] = res
 
-    # returns a dictionary of resources for the level "lvlname"
-    # key : sound name
-    # value : pygame.mixer.Sound object
-    def get_sounds(self, lvlname):
-        dic = {}
-        reslist = self.sounds[lvlname]
-        for name, obj in reslist:
-            dic[name] = obj
-        return dic
+    # return a sprite sheet in a dictionary.
+    # The dictionary maps a name to a list of PyGame Rect coordiantes.
+    # Name describes the action by the images from the Rect coordinates on
+    # sprite sheet.
+    def get_spritesheet(self, name):
+        return self.sprites[name]
+                   
+    # returns a PyGame image object
+    def get_image(self, name):        
+        return self.images[name]
+
+    # returns a PyGame Sound object
+    def get_sound(self, name):        
+        return self.sounds[name]
 
     # returns full screen dimention tuple (width, height)
     def get_fullscreendim(self):

@@ -1,13 +1,12 @@
-from stage import stage
 import pygame as pg
 from pygame.locals import *
 
-class level0(stage):
+class level0:
     def __init__(self, resmgr):
-        super(level0, self).__init__(resmgr)
+        self.resmgr = resmgr
 
-        self.images = self.resmgr.get_images("level0")
-        self.sounds = self.resmgr.get_sounds("level0")
+        #self.images = self.resmgr.get_images("level0")
+        #self.sounds = self.resmgr.get_sounds("level0")
         
         self.hello = self.sounds["hello.mp3"]
         self.man = self.images["img2.png"]
@@ -52,7 +51,13 @@ class level0(stage):
     # everything happens in there.
     # master game loop will call this.
     def notify(self, ev):
-        self.run()
+        self.update(ev)
+
+    def update(self, ev):
+        pass
+
+    def draw(self, ev):
+        pass
 
     def calculate_size(self, i):
 
