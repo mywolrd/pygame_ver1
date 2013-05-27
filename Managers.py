@@ -21,7 +21,7 @@ class ResourceManager:
     # to a list of PyGame rectangle coordinates
     def load_spritesheet(self,name,sheetinfo):
         
-        spriteimage = load_img(name)
+        spriteimage = self.images[name]
         dic = {}
 
         for key, value in sheetinfo:

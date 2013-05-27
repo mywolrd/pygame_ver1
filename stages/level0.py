@@ -8,12 +8,13 @@ class level0:
         #self.images = self.resmgr.get_images("level0")
         #self.sounds = self.resmgr.get_sounds("level0")
         
-        self.hello = self.sounds["hello.mp3"]
-        self.man = self.images["img2.png"]
+        #self.hello = self.sounds["hello.mp3"]
+        #self.man = self.images["img2.png"]
         
         self.screendim = (1000, 700)
+        #self.resmgr.load_spritesheet("me", ())
         #self.screendim = self.resmgr.get_fullscreendim()
-        self.mandim = self.man.get_size()
+        #self.mandim = self.man.get_size()
         
     def run(self):
         surface = pg.display.get_surface()
