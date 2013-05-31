@@ -30,12 +30,11 @@ class Tile(BaseSprite):
 # spritesheet is an image object/file containing bunch of sprites
 # sheetinfo is a dictionary - 
 class BaseSpriteSheet(pg.sprite.DirtySprite):
-    def __init__(self, spritesheet, sheetinfo):
+    def __init__(self, spritesheet):
         super(BaseSpriteSheet, self).__init__()
         self.dirty = 2
 
         self.sheet = spritesheet
-        self.sheetinfo = sheetinfo
         
         self.animindex = 0
 

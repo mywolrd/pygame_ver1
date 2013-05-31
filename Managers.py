@@ -1,4 +1,4 @@
-import os
+import os, sys
 from pygame.locals import *
 import pygame as pg
 import stages.levels as levels
@@ -10,8 +10,15 @@ class ResourceManager:
         self.sounds = {}
         self.sprites = {}
 
+        zombie = {K_DOWN : [(0,0,32,36), (46,0,32,36), (92,0,32,36)],
+                  K_RIGHT : [(0,36,32,36), (46,36,32,36), (92,36,32,36)],
+                  K_UP : [(0,72,32,36), (46,72,32,36), (92,72,32,36)],
+                  K_LEFT : [(0,108,32,36), (46,108,32,36), (92,108,32,36)]}
+
         self.load_resources("img", self.load_img, self.images)
         self.load_resources("snd", self.load_sound, self.sounds)
+ 
+        self.load_spritesheet("zombie", zombie)
 
         self.fullscreen_dim = pg.display.list_modes()[0]
 
@@ -24,7 +31,7 @@ class ResourceManager:
         spriteimage = self.images[name]
         dic = {}
 
-        for key, value in sheetinfo:
+        for key, value in sheetinfo.iteritems():
             for coordinates in value:
                 rect = pg.Rect(coordinates)
                 image = spriteimage.subsurface(rect)
@@ -106,9 +113,22 @@ class InputManager:
     def notify(self, ev):
         for event in pg.event.get():
             if event.type == QUIT:
-                pass
+                pg.quit()
+                sys.exit()
             elif event.type == KEYDOWN and event.key == K_ESCAPE:
-                pass
+                pg.quit()
+                sys.exit()
+            elif event.type == KEYDOWN and event.key == K_LEFT:
+                ev.post(event.key)
+            elif event.type == KEYDOWN and event.key == K_RIGHT:
+                ev.post(event.key)
+            elif event.type == KEYDOWN and event.key == K_UP:
+                ev.post(event.key)
+            elif event.type == KEYDOWN and event.key == K_DOWN:
+                ev.post(event.key)
+            #elif event.type == KEYDOWN and event.key == :
+            #    print (event.key)
+
 
 # holds level object that is rendered on a screen.
 # when a level finishes, it calles level.next_level()
