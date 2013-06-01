@@ -190,7 +190,13 @@ class GameManager:
     
     # initializes pygame and creates a screen
     def init_pyGame(self):
+        
+        # initializes PyGame components
         pg.init()
+        
+        # enables key press and hold
+        pg.key.set_repeat(50, 50)
+
         screen = pg.display.set_mode((800, 600), RESIZABLE)
 
     # returns pygame.time.Clock object

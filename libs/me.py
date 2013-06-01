@@ -32,11 +32,13 @@ class Me(BaseSpriteSheet):
             if self.animation != ev:
                 self.animation = ev
 
+        # I think Y- axis is flipped, and I don't know why.....
+        # swapped dy so the character moves to the input direction. 
         if ev == K_UP:
-            dy = self.speed
+            dy = -self.speed
             setAnimation(ev)
         elif ev == K_DOWN:
-            dy = -self.speed
+            dy = self.speed
             setAnimation(ev)
         elif ev == K_LEFT:
             dx = -self.speed
@@ -72,9 +74,9 @@ class Me(BaseSpriteSheet):
         # check for collision. If there is, don't update.
         # Boundary checks neccessary ? Not sure if PyGame takes care of it....
         # C source code does not seem to check boundaries.
-        if collidables:
-            if not pg.sprite.spritecollideany(copy_me, collidables):
-                self.rect.move_ip(dx, dy)
+        #if collidables:
+        #    if not pg.sprite.spritecollideany(copy_me, collidables):
+        self.rect.move_ip(dx, dy)
             
         # change self.image to the next motion in spritesheet
         if self.animindex == INDEXMAX:

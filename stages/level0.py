@@ -24,7 +24,7 @@ class level0:
         self.sprites.add(self.player)
 
         self.background = pg.Surface(self.screen.get_size())
-        self.background.fill((250, 250, 250))
+        self.background.fill((0, 0, 0))
         self.background = self.background.convert()
         
     def run(self):
