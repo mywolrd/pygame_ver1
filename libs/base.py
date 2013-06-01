@@ -34,7 +34,7 @@ class BaseSpriteSheet(pg.sprite.DirtySprite):
         super(BaseSpriteSheet, self).__init__()
         self.dirty = 2
 
-        self.sheet = spritesheet
+        self.spritesheet = spritesheet
         
         self.animindex = 0
 

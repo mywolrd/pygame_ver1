@@ -1,3 +1,4 @@
+from libs.me import Me
 import pygame as pg
 from pygame.locals import *
 
@@ -12,9 +13,19 @@ class level0:
         #self.man = self.images["img2.png"]
         
         self.screendim = (1000, 700)
+        self.screen = pg.display.get_surface()
         #self.resmgr.load_spritesheet("me", ())
         #self.screendim = self.resmgr.get_fullscreendim()
         #self.mandim = self.man.get_size()
+        self.player = Me(self.resmgr.get_spritesheet("zombie"))
+        self.player.setPosition((500, 500))
+        
+        self.sprites = pg.sprite.Group()
+        self.sprites.add(self.player)
+
+        self.background = pg.Surface(self.screen.get_size())
+        self.background.fill((250, 250, 250))
+        self.background = self.background.convert()
         
     def run(self):
         surface = pg.display.get_surface()
@@ -54,12 +65,15 @@ class level0:
     def notify(self, ev):
         self.update(ev)
 
-    def update(self, ev):
-        pass
+    def update(self, ev):        
+        self.player.update(ev)
+        self.draw()
 
-    def draw(self, ev):
-        pass
-
+    def draw(self, ev=None):
+        self.screen.blit(self.background, (0, 0))
+        self.sprites.draw(self.screen)
+        pg.display.flip()
+        
     def calculate_size(self, i):
 
         percent = (i+1) * 0.2

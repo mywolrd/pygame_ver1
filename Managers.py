@@ -119,13 +119,13 @@ class InputManager:
                 pg.quit()
                 sys.exit()
             elif event.type == KEYDOWN and event.key == K_LEFT:
-                ev.post(event.key)
+                self.eventmgr.post(event.key)
             elif event.type == KEYDOWN and event.key == K_RIGHT:
-                ev.post(event.key)
+                self.eventmgr.post(event.key)
             elif event.type == KEYDOWN and event.key == K_UP:
-                ev.post(event.key)
+                self.eventmgr.post(event.key)
             elif event.type == KEYDOWN and event.key == K_DOWN:
-                ev.post(event.key)
+                self.eventmgr.post(event.key)
             #elif event.type == KEYDOWN and event.key == :
             #    print (event.key)
 
